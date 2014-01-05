@@ -66,7 +66,7 @@ describe('Extraction', function () {
     mhtml.extract(sources + 'example1.mhtml', tmpdir, function (err) {
       var extracted1 = fs.readdirSync(tmpdir);
       var extracted2 = fs.readdirSync(tmpdir + 'img');
-      extracted1.should.eql(['example.css', 'example.html', 'img']);
+      extracted1.should.eql(['example.css', 'example.html', 'foo.txt', 'img']);
       extracted2.should.eql(['bench.jpg', 'flower.jpg', 'good-example.jpg']);
       done();
     }, true);
