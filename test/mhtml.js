@@ -28,10 +28,20 @@ describe('Extraction', function () {
 
   it('should extract etsy.com', function (done) {
     mhtml.extract(sources + 'etsy.mhtml', tmpdir, function (err) {
-      var extracted1 = fs.readdirSync(tmpdir);
-      extracted1.should.eql(['http:']);
+      var extracted1 = fs.readdirSync(tmpdir + "http:");
+      extracted1.should.eql(['www.etsy.com']);
+
       done();
     });
+  });
+
+  it('should extract etsy.com including external assets', function (done) {
+    mhtml.extract(sources + 'etsy.mhtml', tmpdir, function (err) {
+      var extracted1 = fs.readdirSync(tmpdir + "http:");
+      extracted1.should.eql(['img0.etsystatic.com', 'img1.etsystatic.com', 'site.etsystatic.com', 'www.etsy.com']);
+
+      done();
+    }, false, true);
   });
 
   it('should create any non-existing output folders', function (done) {
