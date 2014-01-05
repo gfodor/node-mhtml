@@ -26,6 +26,14 @@ describe('Extraction', function () {
     });
   });
 
+  it('should extract etsy.com', function (done) {
+    mhtml.extract(sources + 'etsy.mhtml', tmpdir, function (err) {
+      var extracted1 = fs.readdirSync(tmpdir);
+      extracted1.should.eql(['http:']);
+      done();
+    });
+  });
+
   it('should create any non-existing output folders', function (done) {
     mhtml.extract(sources + 'example1.mhtml', tmpdir + 'one/two/three', function (err) {
       var basedir = fs.readdirSync(tmpdir);
