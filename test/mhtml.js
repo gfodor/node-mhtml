@@ -2,6 +2,7 @@
 var should = require('should');
 var fs = require('fs-extra');
 var mhtml = require(__dirname + '/../mhtml');
+var hat = require('hat');
 
 var sources = __dirname + '/examples/';
 var tmpdir = __dirname + '/tmp/';
@@ -46,6 +47,18 @@ describe('Extraction', function () {
     }, false, true);
   });
 
+  it('should extract microsoft.com despite long filenames with meta', function (done) {
+    mhtml.extract(sources + 'microsoft.mhtml', tmpdir, function (err, primaryContentPath, primaryContentUrl) {
+      primaryContentUrl.should.eql("http://www.microsoft.com/en-us/default.aspx");
+      var extracted1 = fs.readdirSync(tmpdir + "http:");
+      var extracted2 = fs.readdirSync(tmpdir + 'http:/c.s-microsoft.com/en-us/CMSStyles');
+      extracted2.length.should.be.above(0)
+      extracted1.should.eql(["c.s-microsoft.com", "i.microsoft.com", "i.s-microsoft.com", "www.microsoft.com"]);
+
+      done();
+    }, false, true, true);
+  });
+
   it('should create any non-existing output folders', function (done) {
     mhtml.extract(sources + 'example1.mhtml', tmpdir + 'one/two/three', function (err) {
       var basedir = fs.readdirSync(tmpdir);
@@ -78,7 +91,7 @@ describe('Extraction', function () {
     mhtml.extract(sources + 'example1.mhtml', tmpdir, function (err) {
       var extracted1 = fs.readdirSync(tmpdir);
       var extracted2 = fs.readdirSync(tmpdir + 'img');
-      extracted1.should.eql(['example.css', 'example.html', 'foo.txt', 'img']);
+      extracted1.should.eql(['example.css', 'example.html', 'img']);
       extracted2.should.eql(['bench.jpg', 'flower.jpg', 'good-example.jpg']);
       done();
     }, true);

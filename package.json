@@ -29,7 +29,9 @@
     "commander": "~2.0.0",
     "glob": "~3.2.7",
     "rimraf": "~2.2.2",
-    "cheerio": "~0.12.4"
+    "cheerio": "~0.12.4",
+    "hat": "0.0.3",
+    "lodash": "~2.4.1"
   },
   "devDependencies": {
     "mocha": "~1.14.0",
@@ -38,6 +40,6 @@
     "istanbul": "~0.1.45"
   },
   "engines": {
-    "node" : ">=0.9.12"
+    "node": ">=0.9.12"
   }
 }
