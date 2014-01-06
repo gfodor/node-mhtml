@@ -36,7 +36,9 @@ describe('Extraction', function () {
   });
 
   it('should extract etsy.com including external assets', function (done) {
-    mhtml.extract(sources + 'etsy.mhtml', tmpdir, function (err) {
+    mhtml.extract(sources + 'etsy.mhtml', tmpdir, function (err, primaryContentPath, primaryContentUrl) {
+      primaryContentUrl.should.eql("http://www.etsy.com/search?q=scarf&view_type=gallery&ship_to=US");
+      primaryContentPath.indexOf("http:/www.etsy.com/search?q=scarf&view_type=gallery&ship_to=US").should.be.above(-1)
       var extracted1 = fs.readdirSync(tmpdir + "http:");
       extracted1.should.eql(['img0.etsystatic.com', 'img1.etsystatic.com', 'site.etsystatic.com', 'www.etsy.com']);
 
