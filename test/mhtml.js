@@ -59,6 +59,16 @@ describe('Extraction', function () {
     }, false, true, true);
   });
 
+  it('should extract cnn.com even though not at index.html', function (done) {
+    mhtml.extract(sources + 'cnn.mhtml', tmpdir, false, true, true, function (err, primaryContentPath, primaryContentUrl) {
+      primaryContentUrl.should.eql("http://www.cnn.com/");
+      var extracted1 = fs.readdirSync(tmpdir + "http:/www.cnn.com");
+      extracted1.length.should.be.above(0)
+
+      done();
+    }, false, true, true);
+  });
+
   it('should create any non-existing output folders', function (done) {
     mhtml.extract(sources + 'example1.mhtml', tmpdir + 'one/two/three', false, false, false, function (err) {
       var basedir = fs.readdirSync(tmpdir);
